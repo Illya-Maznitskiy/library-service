@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 
 import users.views
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("books/", include("books.urls")),
@@ -37,4 +38,5 @@ urlpatterns = [
         name="token_refresh",
     ),
     path("users/", include("users.urls")),
+    path("borrowings/", include("borrowings.urls")),
 ]
