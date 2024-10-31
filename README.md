@@ -15,7 +15,7 @@ This project upgrades the library system, enabling users to borrow books and pay
 ## Features
 API with Books data
 Borrowing feature
-Filtering Borowwings list
+Filtering Borrowings list
 
 
 ## Setup
@@ -44,19 +44,28 @@ flake8
 
 
 ## Access
-- **Superusers**: Can modify all data (e.g., add, update, delete entries) in the Theatre API.
-- **Authenticated Users**: Can view data and create reservations and tickets but cannot modify existing data.
 To create a superuser, use the following command:
 
 ```bash
 python manage.py createsuperuser
 ```
-After creating the superuser, you can log in using these credentials on the /api/user/login/ page to get your authentication token. This token can be used for authorized access to the Library API.
+After creating the superuser, you can log in using these credentials on the /user/token/ page to get your authentication token. This token can be used for authorized access to the Library API.
 
 
 ## API Endpoints
-- api/books/
+### Books Service
+- POST: **`books/`**             - Add a new book
+- GET: **`books/`**              - Get a list of books
+- GET: **`books/<id>/`**         - Get book detail info 
+- PUT/PATCH: **`books/<id>/`**   - Update book (also manage inventory)
+- DELETE: **`books/<id>/`**      - Delete book
 
+### Users Service
+- POST: **`users/`**                          - Register a new user 
+- POST: **`users/token/`**                   - Get JWT tokens 
+- POST: **`users/token/refresh/`**           - Refresh JWT token 
+- GET: **`users/me/`**                        - Get my profile info 
+- PUT/PATCH: **`users/me/`**                  - Update profile info
 
 ## Screenshots:
 ![Library Structure](screenshots/library_structure.png)
