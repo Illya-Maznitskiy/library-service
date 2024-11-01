@@ -67,5 +67,12 @@ After creating the superuser, you can log in using these credentials on the /use
 - GET: **`users/me/`**                        - Get my profile info 
 - PUT/PATCH: **`users/me/`**                  - Update profile info
 
+### Borrowing Service
+- **POST:** `borrowings/`                      - Add new borrowing (inventory should be decremented by 1)
+- **GET:** `borrowings/?user_id=...&is_active=...`  - Get borrowings by user ID and whether the borrowing is still active
+- **GET:** `borrowings/<id>/`                  - Get specific borrowing 
+- **POST:** `borrowings/<id>/return/`         - Set actual return date (inventory should be incremented by 1)
+
+
 ## Screenshots:
 ![Library Structure](screenshots/library_structure.png)
