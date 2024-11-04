@@ -35,6 +35,12 @@ class BorrowingSerializer(serializers.ModelSerializer):
         borrow_date = attrs.get("borrow_date")
         expected_return_date = attrs.get("expected_return_date")
         actual_return_date = attrs.get("actual_return_date")
+        book = attrs.get("book")
+
+        if book.inventory <= 0:
+            raise serializers.ValidationError(
+                "The book is not available for borrowing."
+            )
 
         if expected_return_date <= borrow_date:
             raise serializers.ValidationError(
