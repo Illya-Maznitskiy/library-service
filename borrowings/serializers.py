@@ -34,6 +34,9 @@ class BorrowingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         book = validated_data["book"]
 
+        user = self.context["request"].user
+        validated_data["user"] = user
+
         if book.inventory > 0:
             book.inventory -= 1
             book.save()
