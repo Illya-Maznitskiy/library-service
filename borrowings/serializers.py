@@ -4,12 +4,26 @@ from books.models import Book
 from borrowings.models import Borrowing
 
 
+class BookDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = [
+            "id",
+            "title",
+            "author",
+            "cover",
+            "inventory",
+            "daily_fee",
+        ]
+
+
 class BorrowingSerializer(serializers.ModelSerializer):
     book = serializers.PrimaryKeyRelatedField(queryset=Book.objects.all())
 
     class Meta:
         model = Borrowing
         fields = [
+            "id",
             "book",
             "user",
             "borrow_date",
@@ -33,3 +47,17 @@ class BorrowingSerializer(serializers.ModelSerializer):
             )
 
         return attrs
+
+
+class BorrowingDetailSerializer(serializers.ModelSerializer):
+    book = BookDetailSerializer()
+
+    class Meta:
+        model = Borrowing
+        fields = [
+            "book",
+            "user",
+            "borrow_date",
+            "expected_return_date",
+            "actual_return_date",
+        ]

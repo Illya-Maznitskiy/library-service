@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from borrowings.models import Borrowing
-from borrowings.serializers import BorrowingSerializer
+from borrowings.serializers import (
+    BorrowingSerializer,
+    BorrowingDetailSerializer,
+)
 
 
 class BorrowingViewSet(viewsets.ModelViewSet):
@@ -14,7 +17,6 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Filter borrowings by user ID and active status."""
         queryset = super().get_queryset()
-
         user_id = self.request.query_params.get("user_id")
         is_active = self.request.query_params.get("is_active")
 
@@ -42,7 +44,7 @@ class BorrowingViewSet(viewsets.ModelViewSet):
                 borrowing.book.inventory += 1
                 borrowing.save()
 
-                serializer = BorrowingSerializer(borrowing)
+                serializer = BorrowingDetailSerializer(borrowing)
 
                 return Response(
                     {
