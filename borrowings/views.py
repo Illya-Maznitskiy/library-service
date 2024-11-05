@@ -15,19 +15,27 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        """Filter borrowings by user ID and active status."""
+        """Filter borrowings by user ID, admin and active status."""
         queryset = super().get_queryset()
         user = self.request.user
+        user_id = self.request.query_params.get("user_id")
         is_active = self.request.query_params.get("is_active")
 
+        # Check if the user is a regular user
+        if not user.is_staff:
+            return queryset.filter(user=user)
+
+        # Check for active status filtering
         if is_active is not None:
             if is_active.lower() == "true":
                 queryset = queryset.filter(actual_return_date=None)
             elif is_active.lower() == "false":
                 queryset = queryset.filter(actual_return_date__isnull=False)
 
-        if not user.is_staff:
-            return queryset.filter(user=user)
+        # Check if user_id is provided and the user is an admin user
+        if user.is_staff:
+            if user_id:
+                queryset = queryset.filter(user_id=user_id)
 
         return queryset
 
