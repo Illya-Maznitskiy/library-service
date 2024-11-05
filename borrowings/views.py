@@ -17,17 +17,17 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Filter borrowings by user ID and active status."""
         queryset = super().get_queryset()
-        user_id = self.request.query_params.get("user_id")
+        user = self.request.user
         is_active = self.request.query_params.get("is_active")
-
-        if user_id is not None:
-            queryset = queryset.filter(user_id=user_id)
 
         if is_active is not None:
             if is_active.lower() == "true":
                 queryset = queryset.filter(actual_return_date=None)
             elif is_active.lower() == "false":
                 queryset = queryset.filter(actual_return_date__isnull=False)
+
+        if not user.is_staff:
+            return queryset.filter(user=user)
 
         return queryset
 
