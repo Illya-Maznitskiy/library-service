@@ -13,9 +13,9 @@ This project upgrades the library system, enabling users to borrow books and pay
 
 
 ## Features
-API with Books data
-Borrowing feature
-Filtering Borrowings list
+- API with Books data
+- Borrowing feature
+- Filtering Borrowings list
 
 
 ## Setup
@@ -37,10 +37,6 @@ You can run the tests and check code style using `flake8` with the following com
 python manage.py test
 flake8
 ```
-
-
-## Configuration .env
-1. Create a .env file in the root directory of the project and add the necessary configuration by the [sample.env](sample.env) file.
 
 
 ## Access
@@ -75,4 +71,11 @@ After creating the superuser, you can log in using these credentials on the /use
 
 
 ## Screenshots:
+### Library Structure
 ![Library Structure](screenshots/library_structure.png)
+
+### Trello Tasks
+![Trello Tasks](screenshots/trello_tasks.png)
+
+### Example of Browsable DRF page
+![Books Page](screenshots/books_page.png)
