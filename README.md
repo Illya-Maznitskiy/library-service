@@ -49,6 +49,10 @@ After creating the superuser, you can log in using these credentials on the /use
 
 
 ## API Endpoints
+### Documentation
+- **GET:** `docs/`             - Access Swagger UI documentation
+- **GET:** `download_docs/`    - Download the API schema
+
 ### Books Service
 - POST: **`books/`**             - Add a new book
 - GET: **`books/`**              - Get a list of books
