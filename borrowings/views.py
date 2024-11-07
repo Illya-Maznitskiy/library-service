@@ -1,3 +1,6 @@
+from datetime import date
+
+from django.utils import timezone
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -44,30 +47,31 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         """Return a book and update its return date."""
         borrowing = self.get_object()
 
-        if borrowing.actual_return_date is None:
-            actual_return_date = request.data.get("actual_return_date")
-
-            if actual_return_date:
-                borrowing.actual_return_date = actual_return_date
-                borrowing.book.inventory += 1
-                borrowing.save()
-
-                serializer = BorrowingDetailSerializer(borrowing)
-
-                return Response(
-                    {
-                        "status": "Book returned successfully",
-                        "borrowing": serializer.data,
-                    },
-                    status=status.HTTP_200_OK,
-                )
-
+        if borrowing.actual_return_date is not None:
             return Response(
-                {"error": "Actual return date is required"},
+                {"error": "Book already returned"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        actual_return_date = request.data.get(
+            "actual_return_date", date.today().isoformat()
+        )
+
+        actual_return_date = timezone.datetime.strptime(
+            actual_return_date, "%Y-%m-%d"
+        ).date()
+
+        borrowing.actual_return_date = actual_return_date
+        borrowing.book.inventory += 1
+        borrowing.book.save()
+
+        borrowing.save()
+
+        serializer = BorrowingDetailSerializer(borrowing)
         return Response(
-            {"error": "Book already returned"},
-            status=status.HTTP_400_BAD_REQUEST,
+            {
+                "status": "Book returned successfully",
+                "borrowing": serializer.data,
+            },
+            status=status.HTTP_200_OK,
         )
