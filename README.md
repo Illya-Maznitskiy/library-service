@@ -29,6 +29,9 @@ source venv/bin/activate (on macOS)
 pip install -r requirements.txt
 ```
 
+## .env file
+You need to create a **.env** file and add the necessary environment variables, as shown in [sample.env](sample.env).
+
 
 ## Commands to test the project:
 You can run the tests and check code style using `flake8` with the following commands:
