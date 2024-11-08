@@ -40,12 +40,29 @@ flake8
 
 
 ## Access
-To create a superuser, use the following command:
-
+- To create a superuser, use the following command:
 ```bash
 python manage.py createsuperuser
 ```
-After creating the superuser, you can log in using these credentials on the /user/token/ page to get your authentication token. This token can be used for authorized access to the Library API.
+_After creating the superuser, you can log in using these credentials on the /users/token/ page to get your authentication token. This token can be used for authorized access to the Library API._
+
+- To run server use the command:
+```bash
+python manage.py runserver
+```
+
+## Docker
+You can also use [Docker](https://www.docker.com/) to run service. Use the commands:
+
+- To build the Docker image:
+```bash
+docker build -t library-service .
+```
+
+- To run the container and server:
+```bash
+docker run -p 8001:8001 library-service
+```
 
 
 ## API Endpoints
